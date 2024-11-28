@@ -20,9 +20,39 @@
 2:(define (tamanho-time treinador)
   (cond
     [(empty? (treinador-time treinador)) 0]  ; Se o time estiver vazio, o tamanho é 0
-    [else (+ 1 (tamanho-time (rest (treinador-time treinador))))]))  ; Caso contrário, conta 1 e chama recursivamente para o resto do time
-
+    [else (+ 1 (tamanho-time (rest (treinador-time treinador))))]))  
 
 
 3:(define (tem-vaga? treinador)
-  (<= (tamanho-time treinador) 5))  ; Se o número de Pokémon no time for 5 ou menos, há vaga (porque o time pode ter no máximo 6 Pokémon)
+  (<= (tamanho-time treinador) 5))   
+
+
+4:(define (recebe-inicial treinador pokemoncapturado)
+  (cond
+    [(empty? (treinador-time treinador)) ; Se o time do treinador estiver vazio
+(make-treinador (treinador-nome treinador) ; Cria um novo treinador com o Pokémon capturado
+(treinador-idade treinador)
+(cons pokemoncapturado (treinador-time treinador)))] 
+    [else
+treinador])) 
+
+5:(define (insere-pokemon treinador pokemoncapturado)
+  (cond
+    [(empty? (treinador-time treinador)) 
+treinador] 
+    [(>= (length (treinador-time treinador)) 6) ; Se o time já tiver 6 Pokémon
+treinador] 
+    [else
+(make-treinador
+(treinador-nome treinador)
+(treinador-idade treinador)
+(cons pokemoncapturado (treinador-time treinador)))])) 
+
+(define p1 (make-pokemon "Pikachu" "Electric" "vazio"))
+(define p2 (make-pokemon "Bulbasaur" "Grass" "Poison"))
+(define pc1 (make-pokemoncapturado p1 "Raio" 5 35 30))
+(define pc2 (make-pokemoncapturado p2 "Flor" 5 45 40))
+(define t1 (make-treinador "Ash" 10 (cons pc1 empty))) 
+
+(insere-pokemon t1 pc2)  
+
